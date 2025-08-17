@@ -5,17 +5,25 @@ import {
   MapPin,
   Star,
   DollarSign,
+  Users,
+  Wifi,
+  Car,
+  Coffee,
+  Waves,
+  Filter,
   Search,
   Phone,
   Mail,
+  Calendar,
   CheckCircle,
+  Heart,
+  Eye,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import Footer from "./Footer";
 
 interface AccommodationPageProps {
   onBack: () => void;
-  onAccommodationItemClick: (accommodation: Accommodation) => void;
 }
 
 interface Accommodation {
@@ -48,24 +56,20 @@ interface Accommodation {
   availability: boolean;
 }
 
-const AccommodationPage: React.FC<AccommodationPageProps> = ({
-  onBack,
-  onAccommodationItemClick,
-}) => {
+const AccommodationPage: React.FC<AccommodationPageProps> = ({ onBack }) => {
   const { language } = useLanguage();
   const [selectedBeach, setSelectedBeach] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAccommodation, setSelectedAccommodation] =
+    useState<Accommodation | null>(null);
 
   const beaches = [
     { id: "all", name: language === "km" ? "ឆ្នេរទាំងអស់" : "All Beaches" },
     { id: "koh-touch", name: language === "km" ? "កោះតូច" : "Koh Touch" },
     { id: "sok-san", name: language === "km" ? "សុខសាន្ត" : "Sok San Beach" },
-    {
-      id: "long-set",
-      name: language === "km" ? "ឡុងសិត" : "Long Set Beach",
-    },
+    { id: "long-set", name: language === "km" ? "ឡុងសិត" : "Long Set Beach" },
     { id: "coconut", name: language === "km" ? "ដូង" : "Coconut Beach" },
   ];
 
@@ -94,7 +98,6 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
     },
   ];
 
-  // Dummy accommodation data to make the component runnable
   const accommodations: Accommodation[] = [
     {
       id: 1,
@@ -383,6 +386,14 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
     return beachMatch && typeMatch && priceMatch && searchMatch;
   });
 
+  const handleAccommodationClick = (accommodation: Accommodation) => {
+    setSelectedAccommodation(accommodation);
+  };
+
+  const closeModal = () => {
+    setSelectedAccommodation(null);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -592,7 +603,7 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
             {filteredAccommodations.map((accommodation) => (
               <div
                 key={accommodation.id}
-                onClick={() => onAccommodationItemClick(accommodation)} // Call the prop function
+                onClick={() => handleAccommodationClick(accommodation)}
                 className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
               >
                 <div className="relative">
@@ -696,10 +707,7 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
                         /{language === "km" ? "យប់" : "night"}
                       </span>
                     </div>
-                    <button
-                      onClick={() => onAccommodationItemClick(accommodation)}
-                      className="bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 hover:from-koh-rong-600 hover:to-koh-rong-700 text-white px-4 py-2 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
-                    >
+                    <button className="bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 hover:from-koh-rong-600 hover:to-koh-rong-700 text-white px-4 py-2 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                       {language === "km" ? "មើលលម្អិត" : "View Details"}
                     </button>
                   </div>
@@ -740,7 +748,229 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
         </div>
       </section>
 
-      {/* Footer is rendered at the App level */}
+      {/* Accommodation Details Modal */}
+      {selectedAccommodation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center rounded-t-3xl">
+              <h2 className="text-2xl font-bold text-gray-900">
+                {language === "km"
+                  ? selectedAccommodation.name
+                  : selectedAccommodation.nameEn}
+              </h2>
+              <button
+                onClick={closeModal}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <ArrowLeft className="h-6 w-6 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              {/* Image Gallery */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="md:col-span-2">
+                  <img
+                    src={selectedAccommodation.image}
+                    alt={
+                      language === "km"
+                        ? selectedAccommodation.name
+                        : selectedAccommodation.nameEn
+                    }
+                    className="w-full h-64 md:h-80 object-cover rounded-2xl"
+                  />
+                </div>
+                <div className="space-y-4">
+                  {selectedAccommodation.gallery
+                    .slice(1, 3)
+                    .map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        alt={`${selectedAccommodation.name} ${index + 2}`}
+                        className="w-full h-36 md:h-36 object-cover rounded-2xl"
+                      />
+                    ))}
+                </div>
+              </div>
+
+              {/* Basic Info */}
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {language === "km" ? "ព័ត៌មានទូទៅ" : "General Information"}
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">
+                        {language === "km" ? "ប្រភេទ" : "Type"}:
+                      </span>
+                      <span className="font-semibold">
+                        {selectedAccommodation.typeEn}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">
+                        {language === "km" ? "ទីតាំង" : "Location"}:
+                      </span>
+                      <span className="font-semibold">
+                        {selectedAccommodation.beachEn}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">
+                        {language === "km" ? "តម្លៃ" : "Price"}:
+                      </span>
+                      <span className="font-bold text-2xl text-koh-rong-600">
+                        {selectedAccommodation.price}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">
+                        {language === "km" ? "ការវាយតម្លៃ" : "Rating"}:
+                      </span>
+                      <div className="flex items-center space-x-1">
+                        <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                        <span className="font-semibold">
+                          {selectedAccommodation.rating}
+                        </span>
+                        <span className="text-gray-500">
+                          ({selectedAccommodation.reviews} reviews)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">
+                        {language === "km" ? "ស្ថានភាព" : "Availability"}:
+                      </span>
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                          selectedAccommodation.availability
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {selectedAccommodation.availability
+                          ? language === "km"
+                            ? "មាន"
+                            : "Available"
+                          : language === "km"
+                          ? "អស់"
+                          : "Booked"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {language === "km" ? "ទំនាក់ទំនង" : "Contact Information"}
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <Phone className="h-5 w-5 text-koh-rong-500" />
+                      <a
+                        href={`tel:${selectedAccommodation.contact.phone}`}
+                        className="text-koh-rong-600 hover:text-koh-rong-700 transition-colors"
+                      >
+                        {selectedAccommodation.contact.phone}
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <Mail className="h-5 w-5 text-koh-rong-500" />
+                      <a
+                        href={`mailto:${selectedAccommodation.contact.email}`}
+                        className="text-koh-rong-600 hover:text-koh-rong-700 transition-colors"
+                      >
+                        {selectedAccommodation.contact.email}
+                      </a>
+                    </div>
+                    {selectedAccommodation.contact.website && (
+                      <div className="flex items-center space-x-3">
+                        <Wifi className="h-5 w-5 text-koh-rong-500" />
+                        <a
+                          href={`https://${selectedAccommodation.contact.website}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-koh-rong-600 hover:text-koh-rong-700 transition-colors"
+                        >
+                          {selectedAccommodation.contact.website}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {language === "km" ? "ការពិពណ៌នា" : "Description"}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {language === "km"
+                    ? selectedAccommodation.description
+                    : selectedAccommodation.descriptionEn}
+                </p>
+              </div>
+
+              {/* Features */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {language === "km" ? "លក្ខណៈពិសេស" : "Features & Amenities"}
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {(language === "km"
+                    ? selectedAccommodation.features
+                    : selectedAccommodation.featuresEn
+                  ).map((feature, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact Actions */}
+              <div className="bg-gradient-to-br from-koh-rong-50 to-blue-50 rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                  {language === "km" ? "កក់ទុកឥឡូវ!" : "Book Now!"}
+                </h3>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href={`tel:${selectedAccommodation.contact.phone}`}
+                    className="bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 hover:from-koh-rong-600 hover:to-koh-rong-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+                  >
+                    <Phone className="h-5 w-5" />
+                    <span>
+                      {language === "km" ? "ទូរស័ព្ទឥឡូវ" : "Call Now"}
+                    </span>
+                  </a>
+                  <a
+                    href={`mailto:${selectedAccommodation.contact.email}?subject=Booking Inquiry - ${selectedAccommodation.nameEn}`}
+                    className="border-2 border-koh-rong-500 text-koh-rong-600 hover:bg-koh-rong-500 hover:text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <Mail className="h-5 w-5" />
+                    <span>
+                      {language === "km" ? "ផ្ញើអ៊ីមែល" : "Send Email"}
+                    </span>
+                  </a>
+                </div>
+                <p className="text-center text-sm text-gray-600 mt-4">
+                  {language === "km"
+                    ? "ទាក់ទងផ្ទាល់ដើម្បីទទួលបានតម្លៃល្អបំផុត"
+                    : "Contact directly for best rates and availability"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-koh-rong-500 to-koh-rong-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <h2 className="text-4xl font-bold mb-6">

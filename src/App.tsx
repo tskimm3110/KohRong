@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import FeaturedPosts from "./components/FeaturedPosts";
-import TravelGallery from "./components/TravelGallery";
-import Categories from "./components/Categories";
-import Newsletter from "./components/Newsletter";
 import Footer from "./components/Footer";
 import ArticlePage from "./components/ArticlePage";
 import AboutPage from "./components/AboutPage";
@@ -19,12 +15,57 @@ import TermsOfServicePage from "./components/TermsOfServicePage";
 import CookiePolicyPage from "./components/CookiePolicyPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 import { getArticleBySlug, articles } from "./data/articles";
-// import CategoryArticlesPage from "./components/CategoryArticlesPageProps";
 import FollowFacebook from "./components/FollowFacebook";
 import SitemapPage from "./components/SitemapPage";
 import InvestmentDetailPage from "./components/InvestmentDetailPage";
 import ServiceDetailPage from "./components/ServiceDetailPage";
-import { Service } from "./components/ServicesPage";
+import AccommodationDetailPage from "./components/AccommodationDetailPage";
+import FeaturedPosts from "./components/FeaturedPosts";
+import TravelGallery from "./components/TravelGallery";
+import Categories from "./components/Categories";
+
+interface Accommodation {
+  id: number;
+  name: string;
+  nameEn: string;
+  type: string;
+  typeEn: string;
+  beach: string;
+  beachEn: string;
+  price: string;
+  priceRange: string;
+  rating: number;
+  reviews: number;
+  description: string;
+  descriptionEn: string;
+  features: string[];
+  featuresEn: string[];
+  image: string;
+  gallery: string[];
+  contact: {
+    phone: string;
+    email: string;
+    website?: string;
+  };
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  availability: boolean;
+}
+
+interface Service {
+  id: number;
+  name: string;
+  nameEn: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  icon: string;
+  details: string;
+  detailsEn: string;
+}
+
 function App() {
   const [currentView, setCurrentView] = useState<
     | "home"
@@ -43,19 +84,23 @@ function App() {
     | "categoryArticles"
     | "investmentDetail"
     | "serviceDetail"
+    | "accommodationDetail"
   >("home");
   const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
-  const [selectedInvestment, setSelectedInvestment] = useState<any>(null); // Add state for selected investment
+  const [selectedInvestment, setSelectedInvestment] = useState<any>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedAccommodationItem, setSelectedAccommodationItem] =
+    useState<Accommodation | null>(null);
 
   const handleViewInvestmentDetails = (opportunity: any) => {
     setSelectedInvestment(opportunity);
     setCurrentView("investmentDetail");
     window.scrollTo(0, 0);
   };
+
   const handleBackToInvestments = () => {
     setCurrentView("investment");
     setSelectedInvestment(null);
@@ -73,6 +118,7 @@ function App() {
     setSelectedService(null);
     window.scrollTo(0, 0);
   };
+
   const handleArticleClick = (articleId: number) => {
     setSelectedArticle(articleId);
     setCurrentView("article");
@@ -144,9 +190,21 @@ function App() {
     setCurrentView("home");
     setSelectedArticle(null);
     setSelectedCategoryId(null);
-    setSelectedInvestment(null); // Reset investment state
+    setSelectedInvestment(null);
     setSelectedService(null);
+    setSelectedAccommodationItem(null);
+    window.scrollTo(0, 0);
+  };
 
+  const handleAccommodationItemClick = (accommodation: Accommodation) => {
+    setSelectedAccommodationItem(accommodation);
+    setCurrentView("accommodationDetail");
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackToAccommodation = () => {
+    setCurrentView("accommodation");
+    setSelectedAccommodationItem(null);
     window.scrollTo(0, 0);
   };
 
@@ -173,7 +231,7 @@ function App() {
             <Hero onExploreClick={handleBlogClick} />
             <FeaturedPosts onArticleClick={handleArticleClick} />
             <TravelGallery onArticleClick={handleArticleClick} />
-            {/* <Categories onCategoryClick={h  andleCategoryClick} /> */}
+            <Categories onCategoryClick={handleCategoryClick} />
             <FollowFacebook />
             <Footer
               onTermsClick={handleTermsClick}
@@ -205,21 +263,36 @@ function App() {
             onArticleClick={handleArticleClick}
           />
         ) : currentView === "accommodation" ? (
-          <AccommodationPage onBack={handleBackToHome} />
+          <AccommodationPage
+            onBack={handleBackToHome}
+            onAccommodationItemClick={handleAccommodationItemClick}
+          />
+        ) : currentView === "accommodationDetail" &&
+          selectedAccommodationItem ? (
+          <AccommodationDetailPage
+            accommodation={selectedAccommodationItem}
+            onBack={handleBackToAccommodation}
+          />
         ) : currentView === "investment" ? (
           <InvestmentPage
             onBack={handleBackToHome}
-            onViewDetails={handleViewInvestmentDetails} // Pass the new handler
+            onViewDetails={handleViewInvestmentDetails}
           />
-        ) : currentView === "investmentDetail" ? ( // Render the new page
+        ) : currentView === "investmentDetail" ? (
           <InvestmentDetailPage
             opportunity={selectedInvestment}
             onBack={handleBackToInvestments}
           />
         ) : currentView === "services" ? (
-          <ServicesPage onBack={handleBackToHome} onServiceSelect={handleServiceSelect} />
+          <ServicesPage
+            onBack={handleBackToHome}
+            onServiceSelect={handleServiceSelect}
+          />
         ) : currentView === "serviceDetail" && selectedService ? (
-          <ServiceDetailPage service={selectedService} onBack={handleBackToServices} />
+          <ServiceDetailPage
+            service={selectedService}
+            onBack={handleBackToServices}
+          />
         ) : currentView === "terms" ? (
           <TermsOfServicePage onBack={handleBackToHome} />
         ) : currentView === "cookies" ? (
@@ -228,12 +301,6 @@ function App() {
           <PrivacyPolicyPage onBack={handleBackToHome} />
         ) : currentView === "sitemap" ? (
           <SitemapPage onBack={handleBackToHome} />
-        ) : currentView === "categoryArticles" && selectedCategoryId ? (
-          <CategoryArticlesPage
-            categoryId={selectedCategoryId}
-            onBack={handleBackToHome}
-            onArticleClick={handleArticleClick}
-          />
         ) : (
           article && <ArticlePage article={article} onBack={handleBackToHome} />
         )}
