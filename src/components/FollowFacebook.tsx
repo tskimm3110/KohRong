@@ -45,7 +45,7 @@ const FollowFacebook: React.FC = () => {
               {/* Cover Photo */}
               <div className="relative h-32 rounded-t-lg overflow-hidden">
                 <img
-                  src="src/data/cover.jpg"
+                  src="https://z-p3-scontent.fpnh5-3.fna.fbcdn.net/v/t39.30808-6/509168522_3110745512407298_6745372200587834649_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFm-R3NnrTpl4G7ZqqSfaEVs57TRxQ1aEuzntNHFDVoSy6-LfDrguSFFyLjw80hC1oyH-MhHNSKwbrZOxWlMuqY&_nc_ohc=4UkUgELWyN0Q7kNvwEhtH5t&_nc_oc=AdlO7v0eFKEUqy5NhOssoE3RsKnvrCS-80oQblR-mgAG0f2MuwBLNrFGJ9xHZZ_dVPo&_nc_zt=23&_nc_ht=z-p3-scontent.fpnh5-3.fna&_nc_gid=o3i5azUUAtb_-etIkuw2dQ&oh=00_AfVCMcXGWnDotxYvYLDSuh1EK9opi1SqQtgVZFkBJFcaXw&oe=68ABAC90"
                   alt="Koh Rong Cover"
                   className="w-full h-full object-cover"
                 />
@@ -55,7 +55,7 @@ const FollowFacebook: React.FC = () => {
               {/* Profile Picture & Name */}
               <div className="relative flex items-end -mt-12 px-4">
                 <img
-                  src="src/data/profile.jpg"
+                  src="https://z-p3-scontent.fpnh5-3.fna.fbcdn.net/v/t39.30808-6/511159286_3110745915740591_6928083610809497399_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHEb9m87bIyWho7AQS0ERAGFnRLUkJsu4YWdEtSQmy7hqyk0wFQSxx8WSUDzMOhn10EwQFcsxbX-5kes_vv9kwH&_nc_ohc=uEqvz1e5bhsQ7kNvwH2xw4Y&_nc_oc=AdlaD16wGt0VSzre_nKqKcEEjxOR2yGjs5SeRbbEF7dKtEiB_RIq5vbKfrqWt3gt3IM&_nc_zt=23&_nc_ht=z-p3-scontent.fpnh5-3.fna&_nc_gid=fbS63yPNA0-p2rhjX0kVcA&oh=00_AfVpQWlcZz3dnwd36q_SuU0yRdJH6_Oz2FhqENT2uipi1Q&oe=68ABBA10"
                   alt="Profile"
                   className="w-24 h-24 rounded-full border-4 border-white shadow-md"
                 />
