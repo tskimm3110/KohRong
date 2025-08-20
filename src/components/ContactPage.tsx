@@ -459,21 +459,16 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
 
           <div className="bg-gray-100 rounded-3xl overflow-hidden shadow-xl">
             <div className="aspect-w-16 aspect-h-9 h-96">
-              <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-16 w-16 text-koh-rong-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                    {language === "km"
-                      ? "កោះរ៉ុង កម្ពុជា"
-                      : "Koh Rong Cambodia"}
-                  </h3>
-                  <p className="text-gray-600">
-                    {language === "km"
-                      ? "កោះដ៏ស្រស់ស្អាតនៅកម្ពុជា"
-                      : "Beautiful Island in Cambodia"}
-                  </p>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125883.35744903189!2d103.20263143840355!3d10.685432819394335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3108b1e7b1a9a23b%3A0x33b33a7a2a75a643!2sKoh%20Rong!5e0!3m2!1sen!2skh!4v1724150291590!5m2!1sen!2skh"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Koh Rong Location"
+              ></iframe>
             </div>
           </div>
         </div>
