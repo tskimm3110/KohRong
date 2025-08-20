@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import Footer from "./Footer";
+import DestinationDetailPage from "./DestinationDetailPage";
 
 interface DestinationsPageProps {
   onBack: () => void;
@@ -83,6 +84,9 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
   const [currentView, setCurrentView] = useState<"beaches" | "villages">(
     "beaches"
   );
+  const [selectedDestination, setSelectedDestination] = useState<
+    Beach | Village | null
+  >(null);
 
   const categories = [
     { id: "all", name: language === "km" ? "ប្រភេទទាំងអស់" : "All Categories" },
@@ -1324,6 +1328,15 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
     : filteredBeaches.filter((beach) => beach.popular);
   const popularBeaches = beaches.filter((beach) => beach.popular);
 
+  if (selectedDestination) {
+    return (
+      <DestinationDetailPage
+        destination={selectedDestination}
+        onBack={() => setSelectedDestination(null)}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -1597,7 +1610,10 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
                           {language === "km" ? "ឆ្នេរ" : "beaches"}
                         </span>
                       </div>
-                      <button className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors">
+                      <button
+                        onClick={() => setSelectedDestination(village)}
+                        className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors"
+                      >
                         {language === "km" ? "មើលលម្អិត" : "View Details"}
                       </button>
                     </div>
@@ -1738,7 +1754,10 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
                           ? "លំបាក"
                           : "Hard"}
                       </span>
-                      <button className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors">
+                      <button
+                        onClick={() => setSelectedDestination(beach)}
+                        className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors"
+                      >
                         {language === "km" ? "មើលលម្អិត" : "View Details"}
                       </button>
                     </div>
