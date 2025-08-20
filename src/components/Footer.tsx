@@ -156,76 +156,112 @@ const Footer: React.FC<FooterProps> = ({
             </h3>
             <ul className="space-y-3">
               <li>
-                <button
-                  onClick={onHomeClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onHomeClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.home")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onDestinationsClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onDestinationsClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.destinations")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onBlogClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onBlogClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.blog")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onAboutClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onAboutClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.about")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onContactClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onContactClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.contact")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onPrivacyClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onPrivacyClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("footer.privacy")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onAccommodationClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onAccommodationClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.accommodation")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onServicesClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onServicesClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.services")}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={onInvestmentClick}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onInvestmentClick?.();
+                  }}
                   className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {t("nav.investment")}
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -283,24 +319,36 @@ const Footer: React.FC<FooterProps> = ({
               </span>
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <button
-                onClick={onTermsClick}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onTermsClick?.();
+                }}
                 className="text-gray-400 hover:text-white text-sm transition-colors"
               >
                 {t("footer.terms")}
-              </button>
-              <button
-                onClick={onCookiesClick}
+              </a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onCookiesClick?.();
+                }}
                 className="text-gray-400 hover:text-white text-sm transition-colors"
               >
                 {t("footer.cookies")}
-              </button>
-              <button
-                onClick={onSitemapClick}
+              </a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSitemapClick?.();
+                }}
                 className="text-gray-400 hover:text-white text-sm transition-colors"
               >
                 {t("footer.sitemap")}
-              </button>
+              </a>
             </div>
           </div>
         </div>

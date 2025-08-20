@@ -233,20 +233,6 @@ function App() {
             <TravelGallery onArticleClick={handleArticleClick} />
             {/* <Categories onCategoryClick={handleCategoryClick} /> */}
             <FollowFacebook />
-            <Footer
-              onTermsClick={handleTermsClick}
-              onCookiesClick={handleCookiesClick}
-              onPrivacyClick={handlePrivacyClick}
-              onSitemapClick={handleSitemapClick}
-              onAccommodationClick={handleAccommodationClick}
-              onServicesClick={handleServicesClick}
-              onInvestmentClick={handleInvestmentClick}
-              onHomeClick={handleBackToHome}
-              onDestinationsClick={handleDestinationsClick}
-              onBlogClick={handleBlogClick}
-              onAboutClick={handleAboutClick}
-              onContactClick={handleContactClick}
-            />
           </>
         ) : currentView === "about" ? (
           <AboutPage onBack={handleBackToHome} />
@@ -304,6 +290,20 @@ function App() {
         ) : (
           article && <ArticlePage article={article} onBack={handleBackToHome} />
         )}
+        <Footer
+          onTermsClick={handleTermsClick}
+          onCookiesClick={handleCookiesClick}
+          onPrivacyClick={handlePrivacyClick}
+          onSitemapClick={handleSitemapClick}
+          onAccommodationClick={handleAccommodationClick}
+          onServicesClick={handleServicesClick}
+          onInvestmentClick={handleInvestmentClick}
+          onHomeClick={handleBackToHome}
+          onDestinationsClick={handleDestinationsClick}
+          onBlogClick={handleBlogClick}
+          onAboutClick={handleAboutClick}
+          onContactClick={handleContactClick}
+        />
       </div>
     </LanguageProvider>
   );
