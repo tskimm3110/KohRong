@@ -26,6 +26,8 @@ interface Accommodation {
   typeEn: string;
   beach: string;
   beachEn: string;
+  village: string;
+  villageEn: string;
   price: string;
   priceRange: string;
   rating: number;
@@ -56,17 +58,88 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
   const [selectedBeach, setSelectedBeach] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
+  const [selectedVillage, setSelectedVillage] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  // New state for applied filters
+  const [appliedFilters, setAppliedFilters] = useState({
+    beach: "all",
+    type: "all",
+    priceRange: "all",
+    village: "all",
+    term: "",
+  });
+
+  const handleFilter = () => {
+    setAppliedFilters({
+      beach: selectedBeach,
+      type: selectedType,
+      priceRange: selectedPriceRange,
+      village: selectedVillage,
+      term: searchTerm,
+    });
+  };
 
   const beaches = [
     { id: "all", name: language === "km" ? "ឆ្នេរទាំងអស់" : "All Beaches" },
     { id: "koh-touch", name: language === "km" ? "កោះតូច" : "Koh Touch" },
     { id: "sok-san", name: language === "km" ? "សុខសាន្ត" : "Sok San Beach" },
-    {
-      id: "long-set",
-      name: language === "km" ? "ឡុងសិត" : "Long Set Beach",
-    },
+    { id: "long-set", name: language === "km" ? "ឡុងសិត" : "Long Set Beach" },
     { id: "coconut", name: language === "km" ? "ដូង" : "Coconut Beach" },
+    {
+      id: "prasat-beach",
+      name: language === "km" ? "ឆ្នេរប្រាសាទ" : "Prasat Beach",
+    },
+    {
+      id: "preksvay-beach",
+      name: language === "km" ? "ឆ្នេរព្រែកស្វាយ" : "Prek Svay Beach",
+    },
+    {
+      id: "lomhor-beach",
+      name: language === "km" ? "ឆ្នេរលំហ" : "Lomhor Beach",
+    },
+    {
+      id: "heaven-beach",
+      name: language === "km" ? "ឆ្នេរឋានសួគ៌" : "Heaven Beach",
+    },
+    {
+      id: "goldensand-beach",
+      name: language === "km" ? "ឆ្នេរខ្សាច់មាស" : "Golden Sand Beach",
+    },
+    { id: "kohrong-beach", name: language === "km" ? "ឆ្នេរកោះរ៉ុង" : "Koh Rong Beach" },
+    {
+      id: "rongsonlem-beach",
+      name: language === "km" ? "ឆ្នេររ៉ុងសន្លឹម" : "Rong Sonlem Beach",
+    },
+    {
+      id: "lazy-beach",
+      name: language === "km" ? "ឆ្នេរលំហែ" : "Lomhae Beach",
+    },
+    {
+      id: "sunset-beach",
+      name: language === "km" ? "ឆ្នេរថ្ងៃលិច" : "Sunset Beach",
+    },
+  ];
+
+  const villages = [
+    { id: "all", name: language === "km" ? "ភូមិទាំងអស់" : "All Villages" },
+    { id: "village1", name: language === "km" ? "ភូមិកោះតូច" : "ភូមិកោះតូច" },
+    {
+      id: "village2",
+      name: language === "km" ? "ភូមិកោះរ៉ុងសន្លឹម" : "ភូមិកោះរ៉ុងសន្លឹម",
+    },
+    {
+      id: "village3",
+      name: language === "km" ? "ភូមិថើមថ្កូវ" : "ភូមិថើមថ្កូវ",
+    },
+    {
+      id: "village4",
+      name: language === "km" ? "ភូមិព្រែកស្វាយ" : "ភូមិព្រែកស្វាយ",
+    },
+    {
+      id: "village5",
+      name: language === "km" ? "ភូមិសុខសាន្ដ" : "ភូមិសុខសាន្ដ",
+    },
   ];
 
   const accommodationTypes = [
@@ -104,6 +177,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Resort",
       beach: "sok-san",
       beachEn: "Sok San Beach",
+      village: "village1",
+      villageEn: "Village 1",
       price: "$120-200",
       priceRange: "luxury",
       rating: 4.8,
@@ -151,6 +226,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Bungalow",
       beach: "koh-touch",
       beachEn: "Koh Touch",
+      village: "village2",
+      villageEn: "Village 2",
       price: "$25-45",
       priceRange: "mid",
       rating: 4.3,
@@ -195,6 +272,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Hostel",
       beach: "long-set",
       beachEn: "Long Set Beach",
+      village: "village3",
+      villageEn: "Village 3",
       price: "$12-25",
       priceRange: "budget",
       rating: 4.1,
@@ -233,6 +312,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Hotel",
       beach: "coconut",
       beachEn: "Coconut Beach",
+      village: "village4",
+      villageEn: "Village 4",
       price: "$60-90",
       priceRange: "mid",
       rating: 4.5,
@@ -277,6 +358,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Resort",
       beach: "sok-san",
       beachEn: "Sok San Beach",
+      village: "village5",
+      villageEn: "Village 5",
       price: "$150-250",
       priceRange: "luxury",
       rating: 4.9,
@@ -322,6 +405,8 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       typeEn: "Guesthouse",
       beach: "koh-touch",
       beachEn: "Koh Touch",
+      village: "village2",
+      villageEn: "Village 2",
       price: "$15-35",
       priceRange: "budget",
       rating: 4.0,
@@ -362,25 +447,30 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
 
   const filteredAccommodations = accommodations.filter((accommodation) => {
     const beachMatch =
-      selectedBeach === "all" || accommodation.beach === selectedBeach;
+      appliedFilters.beach === "all" ||
+      accommodation.beach === appliedFilters.beach;
     const typeMatch =
-      selectedType === "all" || accommodation.type === selectedType;
+      appliedFilters.type === "all" ||
+      accommodation.type === appliedFilters.type;
     const priceMatch =
-      selectedPriceRange === "all" ||
-      accommodation.priceRange === selectedPriceRange;
+      appliedFilters.priceRange === "all" ||
+      accommodation.priceRange === appliedFilters.priceRange;
+    const villageMatch =
+      appliedFilters.village === "all" ||
+      accommodation.village === appliedFilters.village;
     const searchMatch =
-      searchTerm === "" ||
+      appliedFilters.term === "" ||
       (language === "km" ? accommodation.name : accommodation.nameEn)
         .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+        .includes(appliedFilters.term.toLowerCase()) ||
       (language === "km"
         ? accommodation.description
         : accommodation.descriptionEn
       )
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        .includes(appliedFilters.term.toLowerCase());
 
-    return beachMatch && typeMatch && priceMatch && searchMatch;
+    return beachMatch && typeMatch && priceMatch && searchMatch && villageMatch;
   });
 
   return (
@@ -509,7 +599,7 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
             </div>
 
             {/* Filters */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-5 gap-6 items-end">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   <MapPin className="inline h-4 w-4 mr-1" />
@@ -563,6 +653,32 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
                   ))}
                 </select>
               </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <MapPin className="inline h-4 w-4 mr-1" />
+                  {language === "km" ? "ភូមិ" : "Village"}
+                </label>
+                <select
+                  value={selectedVillage}
+                  onChange={(e) => setSelectedVillage(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-koh-rong-500 focus:border-transparent transition-all"
+                >
+                  {villages.map((village) => (
+                    <option key={village.id} value={village.id}>
+                      {village.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <button
+                  onClick={handleFilter}
+                  className="w-full flex items-center justify-center space-x-2 bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-3 rounded-xl font-semibold transition-colors"
+                >
+                  <Search className="h-5 w-5" />
+                  <span>{language === "km" ? "ស្វែងរក" : "Search"}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -578,11 +694,11 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
                 ? `ទទួលបានលទ្ធផល ${filteredAccommodations.length} កន្លែង`
                 : `Found ${filteredAccommodations.length} accommodations`}
             </h2>
-            {searchTerm && (
+            {appliedFilters.term && (
               <p className="text-gray-600">
                 {language === "km"
-                  ? `លទ្ធផលសម្រាប់ "${searchTerm}"`
-                  : `Results for "${searchTerm}"`}
+                  ? `លទ្ធផលសម្រាប់ "${appliedFilters.term}"`
+                  : `Results for "${appliedFilters.term}"`}
               </p>
             )}
           </div>
@@ -730,6 +846,14 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
                   setSelectedBeach("all");
                   setSelectedType("all");
                   setSelectedPriceRange("all");
+                  setSelectedVillage("all");
+                  setAppliedFilters({
+                    beach: "all",
+                    type: "all",
+                    priceRange: "all",
+                    village: "all",
+                    term: "",
+                  });
                 }}
                 className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-6 py-3 rounded-full font-semibold transition-colors"
               >
