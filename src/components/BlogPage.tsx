@@ -755,8 +755,6 @@ const BlogPage: React.FC<BlogPageProps> = ({ onBack, onArticleClick }) => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

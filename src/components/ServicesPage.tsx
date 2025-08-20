@@ -978,7 +978,6 @@ const ServicesPage: React.FC<ServicesPageProps> = ({
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

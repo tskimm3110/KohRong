@@ -444,8 +444,6 @@ const InvestmentPage: React.FC<InvestmentPageProps> = ({
       </section>
 
       {/* Investment Opportunity Modal */}
-
-      <Footer />
     </div>
   );
 };

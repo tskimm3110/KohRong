@@ -508,8 +508,6 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -1319,8 +1319,10 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         beach.village === "ភូមិដើមថ្កូវ") ||
       (appliedSelectedVillage === "prek-svay" &&
         beach.village === "ភូមិព្រែកស្វាយ") ||
-      (appliedSelectedVillage === "sok-san" && beach.village === "ភូមិសុខសាន្ត") ||
-      (appliedSelectedVillage === "koh-touch" && beach.village === "ភូមិកោះតូច") ||
+      (appliedSelectedVillage === "sok-san" &&
+        beach.village === "ភូមិសុខសាន្ត") ||
+      (appliedSelectedVillage === "koh-touch" &&
+        beach.village === "ភូមិកោះតូច") ||
       (appliedSelectedVillage === "koh-rong-sanloem" &&
         beach.village === "ភូមិកោះរ៉ុងសន្លឹម");
 
@@ -2358,8 +2360,6 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

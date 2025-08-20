@@ -106,7 +106,10 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
       id: "goldensand-beach",
       name: language === "km" ? "ឆ្នេរខ្សាច់មាស" : "Golden Sand Beach",
     },
-    { id: "kohrong-beach", name: language === "km" ? "ឆ្នេរកោះរ៉ុង" : "Koh Rong Beach" },
+    {
+      id: "kohrong-beach",
+      name: language === "km" ? "ឆ្នេរកោះរ៉ុង" : "Koh Rong Beach",
+    },
     {
       id: "rongsonlem-beach",
       name: language === "km" ? "ឆ្នេររ៉ុងសន្លឹម" : "Rong Sonlem Beach",
@@ -893,8 +896,6 @@ const AccommodationPage: React.FC<AccommodationPageProps> = ({
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

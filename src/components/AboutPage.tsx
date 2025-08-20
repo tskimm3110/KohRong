@@ -389,8 +389,6 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
