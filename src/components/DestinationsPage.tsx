@@ -88,6 +88,17 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
     Beach | Village | null
   >(null);
 
+  const [appliedSearchTerm, setAppliedSearchTerm] = useState("");
+  const [appliedSelectedVillage, setAppliedSelectedVillage] = useState("all");
+  const [appliedSelectedCategory, setAppliedSelectedCategory] = useState("all");
+
+  const handleFilterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAppliedSearchTerm(searchTerm);
+    setAppliedSelectedVillage(selectedVillage);
+    setAppliedSelectedCategory(selectedCategory);
+  };
+
   const categories = [
     { id: "all", name: language === "km" ? "ប្រភេទទាំងអស់" : "All Categories" },
     { id: "beaches", name: language === "km" ? "ឆ្នេរ" : "Beaches" },
@@ -1303,22 +1314,25 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
 
   const filteredBeaches = beaches.filter((beach) => {
     const villageMatch =
-      selectedVillage === "all" ||
-      (selectedVillage === "daem-thkov" && beach.village === "ភូមិដើមថ្កូវ") ||
-      (selectedVillage === "prek-svay" && beach.village === "ភូមិព្រែកស្វាយ") ||
-      (selectedVillage === "sok-san" && beach.village === "ភូមិសុខសាន្ត") ||
-      (selectedVillage === "koh-touch" && beach.village === "ភូមិកោះតូច") ||
-      (selectedVillage === "koh-rong-sanloem" &&
+      appliedSelectedVillage === "all" ||
+      (appliedSelectedVillage === "daem-thkov" &&
+        beach.village === "ភូមិដើមថ្កូវ") ||
+      (appliedSelectedVillage === "prek-svay" &&
+        beach.village === "ភូមិព្រែកស្វាយ") ||
+      (appliedSelectedVillage === "sok-san" && beach.village === "ភូមិសុខសាន្ត") ||
+      (appliedSelectedVillage === "koh-touch" && beach.village === "ភូមិកោះតូច") ||
+      (appliedSelectedVillage === "koh-rong-sanloem" &&
         beach.village === "ភូមិកោះរ៉ុងសន្លឹម");
 
     const categoryMatch =
-      selectedCategory === "all" || beach.categories.includes(selectedCategory);
+      appliedSelectedCategory === "all" ||
+      beach.categories.includes(appliedSelectedCategory);
 
     const searchMatch =
-      searchTerm === "" ||
+      appliedSearchTerm === "" ||
       (language === "km" ? beach.name : beach.nameEn)
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        .includes(appliedSearchTerm.toLowerCase());
 
     return villageMatch && searchMatch && categoryMatch;
   });
@@ -1440,7 +1454,10 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
       {currentView === "beaches" && (
         <section className="py-8 bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            <form
+              onSubmit={handleFilterSubmit}
+              className="flex flex-col lg:flex-row gap-6 items-center justify-between"
+            >
               {/* Search */}
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -1486,7 +1503,13 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
                   ))}
                 </select>
               </div>
-            </div>
+              <button
+                type="submit"
+                className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
+              >
+                {language === "km" ? "ស្វែងរក" : "Search"}
+              </button>
+            </form>
           </div>
         </section>
       )}
