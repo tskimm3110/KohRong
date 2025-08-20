@@ -1,7 +1,16 @@
-import React from 'react';
-import { ArrowLeft, Calendar, User, Clock, Eye, Heart, MessageCircle, Share2 } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Article } from '../data/articles';
+import React from "react";
+import {
+  ArrowLeft,
+  Calendar,
+  User,
+  Clock,
+  Eye,
+  Heart,
+  MessageCircle,
+  Share2,
+} from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { Article } from "../data/articles";
 
 interface ArticlePageProps {
   article: Article;
@@ -12,9 +21,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
   const { language, t } = useLanguage();
 
   const formatContent = (content: string) => {
-    return content.split('\n').map((paragraph, index) => {
+    return content.split("\n").map((paragraph, index) => {
       // Handle images
-      if (paragraph.includes('![') && paragraph.includes('](')) {
+      if (paragraph.includes("![") && paragraph.includes("](")) {
         const imageMatch = paragraph.match(/!\[(.*?)\]\((.*?)\)/);
         if (imageMatch) {
           const [, altText, imageUrl] = imageMatch;
@@ -34,38 +43,53 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
           );
         }
       }
-      
-      if (paragraph.startsWith('# ')) {
+
+      if (paragraph.startsWith("# ")) {
         return (
-          <h1 key={index} className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            {paragraph.replace('# ', '')}
+          <h1
+            key={index}
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight"
+          >
+            {paragraph.replace("# ", "")}
           </h1>
         );
-      } else if (paragraph.startsWith('## ')) {
+      } else if (paragraph.startsWith("## ")) {
         return (
-          <h2 key={index} className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 mt-12 leading-tight">
-            {paragraph.replace('## ', '')}
+          <h2
+            key={index}
+            className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 mt-12 leading-tight"
+          >
+            {paragraph.replace("## ", "")}
           </h2>
         );
-      } else if (paragraph.startsWith('### ')) {
+      } else if (paragraph.startsWith("### ")) {
         return (
-          <h3 key={index} className="text-xl md:text-2xl font-bold text-gray-700 mb-4 mt-8 leading-tight">
-            {paragraph.replace('### ', '')}
+          <h3
+            key={index}
+            className="text-xl md:text-2xl font-bold text-gray-700 mb-4 mt-8 leading-tight"
+          >
+            {paragraph.replace("### ", "")}
           </h3>
         );
-      } else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+      } else if (paragraph.startsWith("**") && paragraph.endsWith("**")) {
         return (
-          <p key={index} className="text-lg font-semibold text-gray-800 mb-4 leading-relaxed">
-            {paragraph.replace(/\*\*/g, '')}
+          <p
+            key={index}
+            className="text-lg font-semibold text-gray-800 mb-4 leading-relaxed"
+          >
+            {paragraph.replace(/\*\*/g, "")}
           </p>
         );
-      } else if (paragraph.startsWith('- ')) {
+      } else if (paragraph.startsWith("- ")) {
         return (
-          <li key={index} className="text-gray-700 mb-2 ml-6 leading-relaxed list-disc">
-            {paragraph.replace('- ', '')}
+          <li
+            key={index}
+            className="text-gray-700 mb-2 ml-6 leading-relaxed list-disc"
+          >
+            {paragraph.replace("- ", "")}
           </li>
         );
-      } else if (paragraph.trim() === '') {
+      } else if (paragraph.trim() === "") {
         return <div key={index} className="mb-4"></div>;
       } else {
         return (
@@ -75,6 +99,25 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
         );
       }
     });
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: language === "km" ? article.title : article.titleEn,
+      text: "Check out this article!",
+      url: window.location.href, // This gets the current page's URL
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+    }
   };
 
   return (
@@ -88,7 +131,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
           >
             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
             <span className="font-medium">
-              {language === 'km' ? 'ត្រលប់ទៅទំព័រដើម' : 'Back to Home'}
+              {language === "km" ? "ត្រលប់ទៅទំព័រដើម" : "Back to Home"}
             </span>
           </button>
         </div>
@@ -100,15 +143,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
         <div className="relative mb-12 rounded-3xl overflow-hidden shadow-2xl">
           <img
             src={article.image}
-            alt={language === 'km' ? article.title : article.titleEn}
+            alt={language === "km" ? article.title : article.titleEn}
             className="w-full h-96 md:h-[500px] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-          
+
           {/* Category Badge */}
           <div className="absolute top-6 left-6">
             <span className="bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-              {language === 'km' ? article.category : article.categoryEn}
+              {language === "km" ? article.category : article.categoryEn}
             </span>
           </div>
 
@@ -116,7 +159,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
           {article.featured && (
             <div className="absolute top-6 right-6">
               <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                {t('featured.badge')}
+                {t("featured.badge")}
               </span>
             </div>
           )}
@@ -125,7 +168,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
         {/* Article Header */}
         <header className="mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-            {language === 'km' ? article.title : article.titleEn}
+            {language === "km" ? article.title : article.titleEn}
           </h1>
 
           {/* Article Meta */}
@@ -133,17 +176,18 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
             <div className="flex items-center space-x-2">
               <User className="h-5 w-5" />
               <span className="font-medium">
-                {language === 'km' ? article.author : article.authorEn}
+                {language === "km" ? article.author : article.authorEn}
               </span>
             </div>
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5" />
-              <span>{language === 'km' ? article.date : article.dateEn}</span>
+              <span>{language === "km" ? article.date : article.dateEn}</span>
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-5 w-5" />
               <span>
-                {language === 'km' ? article.readTime : article.readTimeEn} {t('featured.minutes')}
+                {language === "km" ? article.readTime : article.readTimeEn}{" "}
+                {t("featured.minutes")}
               </span>
             </div>
           </div>
@@ -153,7 +197,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-2 text-gray-600">
                 <Eye className="h-5 w-5" />
-                <span className="font-medium">{article.views.toLocaleString()}</span>
+                <span className="font-medium">
+                  {article.views.toLocaleString()}
+                </span>
               </div>
               <div className="flex items-center space-x-2 text-gray-600">
                 <Heart className="h-5 w-5" />
@@ -164,10 +210,13 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
                 <span className="font-medium">{article.comments}</span>
               </div>
             </div>
-            <button className="flex items-center space-x-2 bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-full transition-colors">
+            <button
+              onClick={handleShare}
+              className="flex items-center space-x-2 bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-full transition-colors"
+            >
               <Share2 className="h-4 w-4" />
               <span className="text-sm font-medium">
-                {language === 'km' ? 'ចែករំលែក' : 'Share'}
+                {language === "km" ? "ចែករំលែក" : "Share"}
               </span>
             </button>
           </div>
@@ -177,7 +226,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
         <div className="prose prose-lg max-w-none">
           <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 border border-gray-100">
             <div className="article-content">
-              {formatContent(language === 'km' ? article.content : article.contentEn)}
+              {formatContent(
+                language === "km" ? article.content : article.contentEn
+              )}
             </div>
           </div>
         </div>
@@ -191,25 +242,26 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ article, onBack }) => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900">
-                  {language === 'km' ? article.author : article.authorEn}
+                  {language === "km" ? article.author : article.authorEn}
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'km' ? 'អ្នកនិពន្ធ' : 'Author'}
+                  {language === "km" ? "អ្នកនិពន្ធ" : "Author"}
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <button className="flex items-center space-x-2 bg-red-50 hover:bg-red-100 text-red-600 px-6 py-3 rounded-full transition-colors">
                 <Heart className="h-5 w-5" />
                 <span className="font-medium">
-                  {language === 'km' ? 'ចូលចិត្ត' : 'Like'} ({article.likes})
+                  {language === "km" ? "ចូលចិត្ត" : "Like"} ({article.likes})
                 </span>
               </button>
               <button className="flex items-center space-x-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-6 py-3 rounded-full transition-colors">
                 <MessageCircle className="h-5 w-5" />
                 <span className="font-medium">
-                  {language === 'km' ? 'មតិយោបល់' : 'Comment'} ({article.comments})
+                  {language === "km" ? "មតិយោបល់" : "Comment"} (
+                  {article.comments})
                 </span>
               </button>
             </div>

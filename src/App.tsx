@@ -231,7 +231,7 @@ function App() {
             <Hero onExploreClick={handleBlogClick} />
             <FeaturedPosts onArticleClick={handleArticleClick} />
             <TravelGallery onArticleClick={handleArticleClick} />
-            <Categories onCategoryClick={handleCategoryClick} />
+            {/* <Categories onCategoryClick={handleCategoryClick} /> */}
             <FollowFacebook />
             <Footer
               onTermsClick={handleTermsClick}
