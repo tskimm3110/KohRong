@@ -48,6 +48,7 @@ interface Beach {
   image: string;
   popular: boolean;
   difficulty: "easy" | "medium" | "hard";
+  categories: string[];
 }
 
 interface Village {
@@ -77,10 +78,51 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedVillage, setSelectedVillage] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [showAllBeaches, setShowAllBeaches] = useState(false);
   const [currentView, setCurrentView] = useState<"beaches" | "villages">(
     "beaches"
   );
+
+  const categories = [
+    { id: "all", name: language === "km" ? "ប្រភេទទាំងអស់" : "All Categories" },
+    { id: "beaches", name: language === "km" ? "ឆ្នេរ" : "Beaches" },
+    {
+      id: "mangroves-rivers",
+      name: language === "km" ? "ព្រៃកោងកាង/ទន្លេ" : "Mangroves/Rivers",
+    },
+    { id: "waterfall", name: language === "km" ? "ទឹកជ្រោះ" : "Waterfall" },
+    {
+      id: "cultural-religious",
+      name: language === "km" ? "វប្បធម៌និងសាសនា" : "Cultural & Religious",
+    },
+    {
+      id: "village-local-life",
+      name:
+        language === "km" ? "ភូមិនិងជីវិតក្នុងតំបន់" : "Village & Local Life",
+    },
+    {
+      id: "marine-activities",
+      name: language === "km" ? "សកម្មភាពសមុទ្រ" : "Marine Activities",
+    },
+    {
+      id: "forest-nature",
+      name: language === "km" ? "ព្រៃឈើនិងធម្មជាតិ" : "Forest & Nature",
+    },
+    {
+      id: "sunset-sunrise",
+      name: language === "km" ? "ថ្ងៃលិច/ថ្ងៃរះ" : "Sunset/Sunrise",
+    },
+    {
+      id: "wellness-relaxation",
+      name:
+        language === "km" ? "សុខភាពនិងការសំរាកលំហែ" : "Wellness & Relaxation",
+    },
+    {
+      id: "photo-spots",
+      name: language === "km" ? "កន្លែងថតរូប" : "Photo Spots",
+    },
+  ];
 
   const villages = [
     { id: "all", name: language === "km" ? "ភូមិទាំងអស់" : "All Villages" },
@@ -401,6 +443,12 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: [
+        "beaches",
+        "photo-spots",
+        "sunset-sunrise",
+        "wellness-relaxation",
+      ],
     },
     {
       id: 2,
@@ -426,6 +474,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "wellness-relaxation", "photo-spots"],
     },
     {
       id: 3,
@@ -451,6 +500,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "forest-nature"],
     },
     {
       id: 4,
@@ -485,6 +535,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "wellness-relaxation"],
     },
     {
       id: 5,
@@ -510,6 +561,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "medium",
+      categories: ["beaches", "marine-activities"],
     },
     {
       id: 6,
@@ -550,6 +602,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "photo-spots"],
     },
     {
       id: 7,
@@ -585,6 +638,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "photo-spots", "forest-nature"],
     },
     {
       id: 8,
@@ -620,6 +674,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "hard",
+      categories: ["beaches", "forest-nature", "photo-spots"],
     },
     {
       id: 9,
@@ -655,6 +710,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "medium",
+      categories: ["beaches", "mangroves-rivers", "forest-nature"],
     },
     {
       id: 10,
@@ -690,6 +746,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "mangroves-rivers", "forest-nature"],
     },
     {
       id: 11,
@@ -725,6 +782,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "village-local-life", "wellness-relaxation"],
     },
     {
       id: 12,
@@ -755,6 +813,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "easy",
+      categories: ["beaches", "village-local-life", "cultural-religious"],
     },
     {
       id: 13,
@@ -785,6 +844,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "medium",
+      categories: ["beaches", "wellness-relaxation"],
     },
     {
       id: 14,
@@ -796,9 +856,9 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
       commune: "សង្កាត់កោះរ៉ុង",
       communeEn: "Koh Rong Commune",
       description:
-        'ឆ្នេរដែលមានឈ្មោះថា "ឋានសួគ៌" ដោយសារភាពស្រស់ស្អាតដូចសួគ៌។ កន្លែងល្អបំផុតសម្រាប់ការសម្រាក។',
+        '"ឆ្នេរដែលមានឈ្មោះថា "ឋានសួគ៌" ដោយសារភាពស្រស់ស្អាតដូចសួគ៌។ កន្លែងល្អបំផុតសម្រាប់ការសម្រាក។',
       descriptionEn:
-        'Beach called "Paradise" because of its heaven-like beauty. Best place for relaxation.',
+        '"Beach called "Paradise" because of its heaven-like beauty. Best place for relaxation.',
       features: ["ស្រស់ស្អាតដូចសួគ៌", "ស្ងប់ស្ងាត់", "ទឹកថ្លា", "ខ្សាច់ស"],
       featuresEn: [
         "Heaven-like beauty",
@@ -815,6 +875,12 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: [
+        "beaches",
+        "wellness-relaxation",
+        "sunset-sunrise",
+        "photo-spots",
+      ],
     },
     {
       id: 15,
@@ -851,6 +917,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "wellness-relaxation", "marine-activities"],
     },
     {
       id: 16,
@@ -886,6 +953,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "village-local-life"],
     },
     {
       id: 17,
@@ -921,6 +989,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "photo-spots", "sunset-sunrise"],
     },
     // New beaches added
     {
@@ -952,6 +1021,12 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: [
+        "beaches",
+        "wellness-relaxation",
+        "photo-spots",
+        "marine-activities",
+      ],
     },
     {
       id: 19,
@@ -987,6 +1062,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "photo-spots", "forest-nature"],
     },
     {
       id: 20,
@@ -1027,6 +1103,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "hard",
+      categories: ["beaches", "mangroves-rivers", "forest-nature"],
     },
     {
       id: 21,
@@ -1057,6 +1134,12 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: [
+        "beaches",
+        "wellness-relaxation",
+        "photo-spots",
+        "marine-activities",
+      ],
     },
     {
       id: 22,
@@ -1081,6 +1164,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "wellness-relaxation"],
     },
     {
       id: 23,
@@ -1116,6 +1200,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "easy",
+      categories: ["beaches", "sunset-sunrise", "photo-spots"],
     },
     {
       id: 24,
@@ -1151,6 +1236,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "medium",
+      categories: ["beaches", "photo-spots", "cultural-religious"],
     },
     {
       id: 25,
@@ -1181,6 +1267,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: true,
       difficulty: "medium",
+      categories: ["beaches", "marine-activities"],
     },
     {
       id: 26,
@@ -1206,6 +1293,7 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
         "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=800",
       popular: false,
       difficulty: "easy",
+      categories: ["beaches", "wellness-relaxation"],
     },
   ];
 
@@ -1219,13 +1307,16 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
       (selectedVillage === "koh-rong-sanloem" &&
         beach.village === "ភូមិកោះរ៉ុងសន្លឹម");
 
+    const categoryMatch =
+      selectedCategory === "all" || beach.categories.includes(selectedCategory);
+
     const searchMatch =
       searchTerm === "" ||
       (language === "km" ? beach.name : beach.nameEn)
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
 
-    return villageMatch && searchMatch;
+    return villageMatch && searchMatch && categoryMatch;
   });
 
   const displayedBeaches = showAllBeaches
@@ -1331,38 +1422,6 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
       </section>
 
       {/* View Selector */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center space-x-4">
-            <button
-              onClick={() => setCurrentView("beaches")}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                currentView === "beaches"
-                  ? "bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 text-white shadow-lg"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Waves className="h-5 w-5" />
-                <span>{language === "km" ? "ឆ្នេរ" : "Beaches"}</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setCurrentView("villages")}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                currentView === "villages"
-                  ? "bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 text-white shadow-lg"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Home className="h-5 w-5" />
-                <span>{language === "km" ? "ភូមិ" : "Villages"}</span>
-              </div>
-            </button>
-          </div>
-        </div>
-      </section>
 
       {/* Search and Filter Section - Only for Beaches */}
       {currentView === "beaches" && (
@@ -1399,112 +1458,25 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
                 </select>
               </div>
 
-              {/* Show All Toggle */}
-              <button
-                onClick={() => setShowAllBeaches(!showAllBeaches)}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  showAllBeaches
-                    ? "bg-koh-rong-500 text-white hover:bg-koh-rong-600"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {showAllBeaches
-                  ? language === "km"
-                    ? "បង្ហាញតែពេញនិយម"
-                    : "Show Popular Only"
-                  : language === "km"
-                  ? "បង្ហាញទាំងអស់"
-                  : "Show All Beaches"}
-              </button>
+              {/* Category Filter */}
+              <div className="flex items-center space-x-4">
+                <Filter className="h-5 w-5 text-gray-600" />
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-koh-rong-500 focus:border-transparent transition-all"
+                >
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </section>
       )}
-
-      {/* Introduction Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
-            {/* Main Introduction */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                  {language === "km" ? "កោះរ៉ុង កម្ពុជា" : "Koh Rong Cambodia"}
-                </h2>
-                <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                  {language === "km"
-                    ? "កោះរ៉ុងគឺជាកោះដ៏ស្រស់ស្អាតមួយនៅក្នុងខេត្តព្រះសីហនុ ដែលមានឆ្នេរខ្សាច់សនិងទឹកសមុទ្រថ្លាដូចកញ្ចក់។ កោះនេះមានឆ្នេរចំនួន ២៦ ដែលនីមួយៗមានលក្ខណៈពិសេសនិងភាពស្រស់ស្អាតខុសៗគ្នា។ កោះរ៉ុងមានភូមិចំនួន ៥ ដែលមានប្រជាពលរដ្ឋសរុបប្រមាណ ២,៨៨៩ នាក់។"
-                    : "Koh Rong is a beautiful island in Sihanoukville Province with white sand beaches and crystal clear ocean water. This island has 26 beaches, each with unique characteristics and beauty. Koh Rong has 5 villages with a total population of approximately 2,889 people."}
-                </p>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-4 bg-koh-rong-50 rounded-2xl">
-                    <Waves className="h-8 w-8 text-koh-rong-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-gray-900">50+</div>
-                    <div className="text-sm text-gray-600">
-                      {language === "km"
-                        ? "គីឡូម៉ែត្រឆ្នេរ"
-                        : "KM of coastline"}
-                    </div>
-                  </div>
-                  <div className="text-center p-4 bg-blue-50 rounded-2xl">
-                    <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-gray-900">
-                      2,889
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {language === "km" ? "ប្រជាពលរដ្ឋ" : "Residents"}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 rounded-3xl p-8">
-                <img
-                  src="https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Koh Rong Beach"
-                  className="w-full h-64 object-cover rounded-2xl mb-6"
-                />
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {language === "km" ? "ព័ត៌មានសំខាន់" : "Key Information"}
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-koh-rong-500" />
-                    <span className="text-gray-700">
-                      {language === "km"
-                        ? "ខេត្តព្រះសីហនុ កម្ពុជា"
-                        : "Sihanoukville Province, Cambodia"}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Clock className="h-5 w-5 text-koh-rong-500" />
-                    <span className="text-gray-700">
-                      {language === "km"
-                        ? "ម៉ោងបើកចំហ ៦:០០ - ១៨:០០"
-                        : "Open hours: 6:00 - 18:00"}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Users className="h-5 w-5 text-koh-rong-500" />
-                    <span className="text-gray-700">
-                      {language === "km"
-                        ? "កន្លែងស្នាក់នៅ ៧០+ កន្លែង"
-                        : "70+ accommodations"}
-                    </span>
-                  </div>
-                </div>
-                <button
-                  onClick={onAccommodationClick}
-                  className="w-full mt-6 bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 hover:from-koh-rong-600 hover:to-koh-rong-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
-                >
-                  {language === "km"
-                    ? "មើលកន្លែងស្នាក់នៅ"
-                    : "View Accommodations"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Villages Section */}
       {currentView === "villages" && (
@@ -1633,321 +1605,6 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Popular Beaches Section - Only for Beaches view */}
-      {currentView === "beaches" && !showAllBeaches && (
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {language === "km" ? "ឆ្នេរពេញនិយម" : "Popular Beaches"}
-              </h2>
-              <p className="text-lg text-gray-600">
-                {language === "km"
-                  ? "ឆ្នេរដែលអ្នកទេសចរណ៍ចូលចិត្តបំផុត"
-                  : "Most loved beaches by tourists"}
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {popularBeaches.slice(0, 6).map((beach) => (
-                <div
-                  key={beach.id}
-                  className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-                >
-                  <div className="relative">
-                    <img
-                      src={beach.image}
-                      alt={language === "km" ? beach.name : beach.nameEn}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center space-x-1">
-                        <Heart className="h-3 w-3 fill-current" />
-                        <span>{language === "km" ? "ពេញនិយម" : "Popular"}</span>
-                      </span>
-                    </div>
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
-                        {(beach.length / 1000).toFixed(1)} km
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {language === "km" ? beach.name : beach.nameEn}
-                    </h3>
-                    <div className="flex items-center space-x-2 text-gray-600 mb-3">
-                      <MapPin className="h-4 w-4" />
-                      <span className="text-sm">
-                        {language === "km" ? beach.village : beach.villageEn}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {language === "km"
-                        ? beach.description
-                        : beach.descriptionEn}
-                    </p>
-
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <Users className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">
-                          {beach.accommodations}{" "}
-                          {language === "km" ? "កន្លែងស្នាក់នៅ" : "places"}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">
-                          {language === "km"
-                            ? beach.bestTime.split(" ")[0]
-                            : beach.bestTimeEn.split(" ")[0]}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {(language === "km" ? beach.features : beach.featuresEn)
-                        .slice(0, 3)
-                        .map((feature, index) => (
-                          <span
-                            key={index}
-                            className="bg-koh-rong-100 text-koh-rong-700 px-2 py-1 rounded-full text-xs"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          beach.difficulty === "easy"
-                            ? "bg-green-100 text-green-800"
-                            : beach.difficulty === "medium"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {beach.difficulty === "easy"
-                          ? language === "km"
-                            ? "ងាយស្រួល"
-                            : "Easy"
-                          : beach.difficulty === "medium"
-                          ? language === "km"
-                            ? "មធ្យម"
-                            : "Medium"
-                          : language === "km"
-                          ? "លំបាក"
-                          : "Hard"}
-                      </span>
-                      <button className="bg-koh-rong-500 hover:bg-koh-rong-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors">
-                        {language === "km" ? "មើលលម្អិត" : "View Details"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Village Details Section */}
-      {currentView === "villages" && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {language === "km"
-                  ? "ព័ត៌មានលម្អិតអំពីភូមិ"
-                  : "Village Details"}
-              </h2>
-              <p className="text-lg text-gray-600">
-                {language === "km"
-                  ? "ព័ត៌មានលម្អិតអំពីភូមិនីមួយៗនៅលើកោះរ៉ុង"
-                  : "Detailed information about each village on Koh Rong"}
-              </p>
-            </div>
-
-            {villageData.map((village, index) => (
-              <div
-                key={village.id}
-                className={`bg-white rounded-3xl shadow-lg overflow-hidden mb-12 ${
-                  index % 2 === 0 ? "" : ""
-                }`}
-              >
-                <div
-                  className={`grid md:grid-cols-2 ${
-                    index % 2 === 0 ? "" : "md:grid-flow-dense"
-                  }`}
-                >
-                  <div
-                    className={`${
-                      index % 2 === 0 ? "md:order-1" : "md:order-2"
-                    }`}
-                  >
-                    <img
-                      src={village.image}
-                      alt={language === "km" ? village.name : village.nameEn}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div
-                    className={`p-8 ${
-                      index % 2 === 0 ? "md:order-2" : "md:order-1"
-                    }`}
-                  >
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {language === "km" ? village.name : village.nameEn}
-                    </h3>
-
-                    {/* Village Stats */}
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="bg-gray-50 rounded-xl p-4 text-center">
-                        <div className="text-xl font-bold text-koh-rong-600">
-                          {village.families}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {language === "km" ? "គ្រួសារ" : "Families"}
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 rounded-xl p-4 text-center">
-                        <div className="text-xl font-bold text-koh-rong-600">
-                          {village.population}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {language === "km" ? "ប្រជាពលរដ្ឋ" : "Population"}
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 rounded-xl p-4 text-center">
-                        <div className="text-xl font-bold text-koh-rong-600">
-                          {village.women}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {language === "km" ? "ស្រី" : "Women"}
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      {language === "km"
-                        ? village.description
-                        : village.descriptionEn}
-                    </p>
-
-                    {/* Accommodations and Restaurants */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="bg-blue-50 rounded-xl p-4">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <Home className="h-5 w-5 text-blue-600" />
-                          <h4 className="font-semibold text-gray-900">
-                            {language === "km"
-                              ? "កន្លែងស្នាក់នៅ"
-                              : "Accommodations"}
-                          </h4>
-                        </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          {village.accommodations}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {language === "km" ? "កន្លែង" : "places"}
-                        </div>
-                      </div>
-                      <div className="bg-green-50 rounded-xl p-4">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <Utensils className="h-5 w-5 text-green-600" />
-                          <h4 className="font-semibold text-gray-900">
-                            {language === "km" ? "ភោជនីយដ្ឋាន" : "Restaurants"}
-                          </h4>
-                        </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          {village.restaurants}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {language === "km" ? "កន្លែង" : "places"}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-3">
-                        {language === "km" ? "លក្ខណៈពិសេស" : "Features"}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {(language === "km"
-                          ? village.features
-                          : village.featuresEn
-                        ).map((feature, index) => (
-                          <span
-                            key={index}
-                            className="bg-koh-rong-100 text-koh-rong-700 px-3 py-1 rounded-full text-sm"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Activities */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-3">
-                        {language === "km" ? "សកម្មភាព" : "Activities"}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {(language === "km"
-                          ? village.activities
-                          : village.activitiesEn
-                        )
-                          .slice(0, 5)
-                          .map((activity, index) => (
-                            <span
-                              key={index}
-                              className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                            >
-                              {activity}
-                            </span>
-                          ))}
-                      </div>
-                    </div>
-
-                    {/* Beaches */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">
-                        {language === "km" ? "ឆ្នេរ" : "Beaches"}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {(language === "km"
-                          ? village.beaches
-                          : village.beachesEn
-                        )
-                          .slice(0, 3)
-                          .map((beach, index) => (
-                            <span
-                              key={index}
-                              className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
-                            >
-                              {beach}
-                            </span>
-                          ))}
-                        {village.beaches.length > 3 && (
-                          <span className="text-sm text-gray-500">
-                            +{village.beaches.length - 3}{" "}
-                            {language === "km" ? "ផ្សេងទៀត" : "more"}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
       )}
@@ -2542,6 +2199,91 @@ const DestinationsPage: React.FC<DestinationsPageProps> = ({
           </div>
         </section>
       )}
+
+      {/* Introduction Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-16">
+            {/* Main Introduction */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  {language === "km" ? "កោះរ៉ុង កម្ពុជា" : "Koh Rong Cambodia"}
+                </h2>
+                <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                  {language === "km"
+                    ? "កោះរ៉ុងគឺជាកោះដ៏ស្រស់ស្អាតមួយនៅក្នុងខេត្តព្រះសីហនុ ដែលមានឆ្នេរខ្សាច់សនិងទឹកសមុទ្រថ្លាដូចកញ្ចក់។ កោះនេះមានឆ្នេរចំនួន ២៦ ដែលនីមួយៗមានលក្ខណៈពិសេសនិងភាពស្រស់ស្អាតខុសៗគ្នា។ កោះរ៉ុងមានភូមិចំនួន ៥ ដែលមានប្រជាពលរដ្ឋសរុបប្រមាណ ២,៨៨៩ នាក់។"
+                    : "Koh Rong is a beautiful island in Sihanoukville Province with white sand beaches and crystal clear ocean water. This island has 26 beaches, each with unique characteristics and beauty. Koh Rong has 5 villages with a total population of approximately 2,889 people."}
+                </p>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="text-center p-4 bg-koh-rong-50 rounded-2xl">
+                    <Waves className="h-8 w-8 text-koh-rong-600 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-gray-900">50+</div>
+                    <div className="text-sm text-gray-600">
+                      {language === "km"
+                        ? "គីឡូម៉ែត្រឆ្នេរ"
+                        : "KM of coastline"}
+                    </div>
+                  </div>
+                  <div className="text-center p-4 bg-blue-50 rounded-2xl">
+                    <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-gray-900">
+                      2,889
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {language === "km" ? "ប្រជាពលរដ្ឋ" : "Residents"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 rounded-3xl p-8">
+                <img
+                  src="https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Koh Rong Beach"
+                  className="w-full h-64 object-cover rounded-2xl mb-6"
+                />
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {language === "km" ? "ព័ត៌មានសំខាន់" : "Key Information"}
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-koh-rong-500" />
+                    <span className="text-gray-700">
+                      {language === "km"
+                        ? "ខេត្តព្រះសីហនុ កម្ពុជា"
+                        : "Sihanoukville Province, Cambodia"}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Clock className="h-5 w-5 text-koh-rong-500" />
+                    <span className="text-gray-700">
+                      {language === "km"
+                        ? "ម៉ោងបើកចំហ ៦:០០ - ១៨:០០"
+                        : "Open hours: 6:00 - 18:00"}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Users className="h-5 w-5 text-koh-rong-500" />
+                    <span className="text-gray-700">
+                      {language === "km"
+                        ? "កន្លែងស្នាក់នៅ ៧០+ កន្លែង"
+                        : "70+ accommodations"}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={onAccommodationClick}
+                  className="w-full mt-6 bg-gradient-to-r from-koh-rong-500 to-koh-rong-600 hover:from-koh-rong-600 hover:to-koh-rong-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                >
+                  {language === "km"
+                    ? "មើលកន្លែងស្នាក់នៅ"
+                    : "View Accommodations"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-koh-rong-500 to-koh-rong-600">
